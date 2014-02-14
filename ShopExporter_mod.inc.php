@@ -2,9 +2,8 @@
 
 /***********************************
 * 
+* Export orders from Shopkeeper
 * http://modx-shopkeeper.ru/
-* Module Shopkeeper 0.9.6 RC1 for MODx
-* Order Management
 * 
 ***********************************/
 

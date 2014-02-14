@@ -25,10 +25,21 @@
         $address2 = trans(str_replace(',',';',$row['address2']));
         $country = isset($a['country']) ? $a['country'] :'country';
         $name = str_replace(',',';',trans($info[0]));
-        $phone = isset($row['phone'])&&strlen($row['phone'])>0?trans($row['phone']):(isset($row['note'])&&strlen($row['note'])>0?trans($row['note']):'phone');
+        if(isset($row['phone'])&&strlen($row['phone'])>0) {
+            $phone = trans($row['phone']);
+        } else {
+            if(isset($row['message'])&&strlen($row['message'])>0) {
+                $m = array();
+                if (preg_match_all('/[\+]{0,1}(\(\d{2,4}\)[0-9\-\ ]{6,})|([0-9\-\ ]{10,})/', $row['message'], $m))
+                    $phone = implode('; ', $m[0]);
+                else
+                    $phone = '';
+            }
+        }
         $phone = str_replace(',',';',$phone);
         $email = str_replace(',',';',$row['email']);
-        echo "<nobr>".$email.",PXL-0".$row['id'].",".$quantity.",".$date.",".$name.",".$address.",".$address2.",,".trans($row['city']).",state,Lightpack,".trans($row['postcode']).",".$country.",".$phone.",,,,,</nobr><br/>";
+        $city = str_replace(',',';',trans($row['city']));
+        echo "<nobr>".$email.",PXL-0".$row['id'].",".$quantity.",".$date.",".$name.",".$address.",".$address2.",,".$city.",,Lightpack,".trans($row['postcode']).",".$country.",".$phone.",,,,,</nobr><br/>";
     }
 ?>
 </span>
